@@ -22,25 +22,20 @@ describe DockingStation do
       it 'docks something' do
         bike = Bike.new
         # we want the dock method to return the bike we docked
-        expect(subject.dock(bike)).to eq bike
+        expect(subject.dock(bike)).to eq [bike]
       end
-
       it 'raises an error when user attempts to
         dock a bike at a full docking station' do
-        bike = Bike.new
-        subject.dock(bike)
-        expect { subject.dock(bike) }.to raise_error 'Docking station full!'
+        20.times { subject.dock(Bike.new) }
+        expect { subject.dock(Bike.new) }.to raise_error 'Docking station full!'
       end
-
     end
-
-
 
     it 'returns docked bikes' do
       bike = Bike.new
       subject.dock(bike)
       # Again, we need to return the bike we just docked
-      expect(subject.bike).to eq bike
+      expect(subject.bikes).to eq [bike]
     end
 
 end
