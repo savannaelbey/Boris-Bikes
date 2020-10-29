@@ -2,19 +2,39 @@ require 'DockingStation'
 
 describe DockingStation do
 
-    it 'releases a working bike' do
-      bike = Bike.new
-      subject.dock(bike)
-      expect(subject.release_bike).to eq bike
-      expect(bike.working?).to eq(true)
+    describe '#release_bike' do
+
+      it 'releases a working bike' do
+        bike = Bike.new
+        subject.dock(bike)
+        expect(bike.working?).to eq(true)
+        # we want to release a working bike we docked
+        expect(subject.release_bike).to eq bike
+      end
+      it 'raises an error when no bikes available' do
+        # lets not dock a bike first:
+        expect { subject.release_bike }.to raise_error 'No bikes available'
+      end
+
+    end
+
+    describe '#dock(bike)' do
+      it 'docks something' do
+        bike = Bike.new
+        # we want the dock method to return the bike we docked
+        expect(subject.dock(bike)).to eq bike
+      end
+
+      it 'raises an error when user attempts to
+        dock a bike at a full docking station' do
+        bike = Bike.new
+        subject.dock(bike)
+        expect { subject.dock(bike) }.to raise_error 'Docking station full!'
+      end
+
     end
 
 
-    it 'docks something' do
-      bike = Bike.new
-      # we want the dock method to return the bike we docked
-      expect(subject.dock(bike)).to eq bike
-    end
 
     it 'returns docked bikes' do
       bike = Bike.new
