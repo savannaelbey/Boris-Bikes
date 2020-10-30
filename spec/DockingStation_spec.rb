@@ -38,4 +38,12 @@ describe DockingStation do
       expect(subject.bikes).to eq [bike]
     end
 
+    # it responds to one argument
+    it { DockingStation.should respond_to(:new).with(1).argument }
+
+    it 'should have a default capacity'do
+      station = DockingStation.new
+      expect(station.capacity).to eq DockingStation::DEFAULT_CAPACITY
+    end
+
 end
